@@ -61,3 +61,5 @@ Antes del ensayo faltaba este README. Lo agregué para que otra persona tenga lo
 Repetí la prueba en otro computador con Windows 10 y Python 3.13.15. El programa también recibió una respuesta de Gemini. Ahí PowerShell bloqueó la activación del entorno; usé el cambio temporal indicado arriba. No faltaron dependencias.
 
 El 22 de octubre repetí el ensayo desde otro clon (`prueba-gate1-main`), esta vez ejecutando `python main.py`. Instalé las dependencias desde `requirements.txt`, configuré un `.env` local y recibí una respuesta de Gemini. Al revisar las instrucciones encontré que el comentario de `.env.example` mencionaba otros proveedores y que el README podía indicar más claramente dónde editar la clave. Aclaré ambos textos; no hubo que cambiar el código ni las dependencias.
+
+Antes de entregar Gate 1, ejecuté de nuevo `python main.py` desde la carpeta principal. Recibí una respuesta de Gemini sobre la distancia al centro de la Vía Láctea y el programa terminó sin errores.
