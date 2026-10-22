@@ -36,11 +36,17 @@ Sin argumentos, `main.py` usa una pregunta de ejemplo. También puedes escribir 
 python main.py "¿Qué es un exoplaneta?"
 ```
 
-`main.py` toma la pregunta y muestra la respuesta en la terminal. La parte que arma la petición, habla con Gemini y lee lo que devuelve está en `src/consumir_gemini.py`. Así, si más adelante cambio la forma de hacer preguntas, no tengo que mezclar eso con la conexión a la API.
-
 Deberías ver una respuesta de Gemini en la terminal. Si aparece un mensaje de error, revisa la clave, el acceso a internet y el nombre del modelo en `.env`.
 
 `.env` y `.venv` son locales y están excluidos de Git. No subas tu clave al repositorio.
+
+## Cómo está organizado
+
+`main.py` es el archivo que se ejecuta para hacer una pregunta. Llama a `src/consumir_gemini.py`, donde están las funciones que preparan la petición, la envían a Gemini y extraen el texto. Ese módulo también maneja los errores de la consulta; no hace falta ejecutarlo por separado.
+
+En el mismo módulo está `calcular_costo()`. La probé por separado con cantidades de tokens de ejemplo, pero todavía no está conectada a `main.py`: al hacer una pregunta, el programa muestra la respuesta y no calcula su costo.
+
+También probé otros modelos antes de elegir Gemini. La comparación de precios por tokens, tiempos y calidad de las respuestas, junto con el motivo de la elección, está en [la decisión de arquitectura](docs/decision-arquitectura.md). Esa comparación es distinta de la prueba de `calcular_costo()`.
 
 ## Banco de prompts
 
