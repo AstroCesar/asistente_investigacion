@@ -24,7 +24,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 
 El cambio de política dura solo mientras esté abierta esa terminal.
 
-Abre el archivo `.env` y reemplaza `tu_llave_aqui` por tu propia clave de Gemini. `MODEL_NAME` ya trae el modelo usado en las pruebas. Guarda el archivo y ejecuta:
+Abre el archivo `.env` con el editor que uses (por ejemplo, con `notepad .env` desde PowerShell) y pon tu clave de Gemini en `API_KEY`, reemplazando `tu_llave_aqui`. La otra variable, `MODEL_NAME`, ya trae el modelo usado en las pruebas. Guarda el archivo y ejecuta:
 
 ```powershell
 python main.py
@@ -59,3 +59,5 @@ El 22 de octubre de 2026 cloné este repositorio desde GitHub en otra carpeta (`
 Antes del ensayo faltaba este README. Lo agregué para que otra persona tenga los pasos sin depender de cómo tengo configurado mi computador.
 
 Repetí la prueba en otro computador con Windows 10 y Python 3.13.15. El programa también recibió una respuesta de Gemini. Ahí PowerShell bloqueó la activación del entorno; usé el cambio temporal indicado arriba. No faltaron dependencias.
+
+El 22 de octubre repetí el ensayo desde otro clon (`prueba-gate1-main`), esta vez ejecutando `python main.py`. Instalé las dependencias desde `requirements.txt`, configuré un `.env` local y recibí una respuesta de Gemini. Al revisar las instrucciones encontré que el comentario de `.env.example` mencionaba otros proveedores y que el README podía indicar más claramente dónde editar la clave. Aclaré ambos textos; no hubo que cambiar el código ni las dependencias.
