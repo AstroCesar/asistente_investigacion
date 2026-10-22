@@ -109,12 +109,3 @@ def obtener_dato_de_prueba(pregunta):
     url, headers, body = armar_peticion(pregunta)
     datos = enviar_peticion(url, headers, body)
     return extraer_texto(datos)
-
-
-if __name__ == "__main__":
-    try:
-        print(obtener_dato_de_prueba(
-            "A que distancia est el centro de la via lactea del sistema solar?, en 25 palabras"
-        ))
-    except (ValueError, RuntimeError) as error:
-        print("No pude obtener la respuesta:", error)
