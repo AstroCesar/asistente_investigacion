@@ -1,0 +1,26 @@
+{
+  "fecha": "2026-10-21",
+  "modelo": "gemini-3.5-flash-lite",
+  "resultados": {
+    "resumir_observacion": {
+      "exitos": 3,
+      "fallos": 0,
+      "intentos": 3
+    },
+    "extraer_distancia": {
+      "exitos": 3,
+      "fallos": 0,
+      "intentos": 3
+    },
+    "detectar_certeza": {
+      "exitos": 3,
+      "fallos": 0,
+      "intentos": 3
+    },
+    "comparar_transitos": {
+      "exitos": 3,
+      "fallos": 0,
+      "intentos": 3
+    }
+  }
+}

@@ -1,12 +1,20 @@
+import json
 import os
+import re
 import requests
 from dotenv import load_dotenv
 
 load_dotenv()
 
-def armar_peticion(pregunta):
+def armar_peticion(pregunta, system_instruction=None, response_schema=None):
     if not isinstance(pregunta, str) or not pregunta.strip():
         raise ValueError("Escribe una pregunta antes de continuar.")
+    if system_instruction is not None and (
+        not isinstance(system_instruction, str) or not system_instruction.strip()
+    ):
+        raise ValueError("La instrucción de sistema debe tener texto.")
+    if response_schema is not None and not isinstance(response_schema, dict):
+        raise ValueError("El esquema de respuesta debe ser un diccionario.")
     api_key = os.getenv("API_KEY")
     modelo = os.getenv("MODEL_NAME")
     if not api_key or not api_key.strip() or api_key.strip() == "tu_llave_aqui":
@@ -19,6 +27,15 @@ def armar_peticion(pregunta):
             {"parts": [{"text": pregunta}]}
         ]
     }
+    if system_instruction is not None:
+        body["systemInstruction"] = {
+            "parts": [{"text": system_instruction}]
+        }
+    if response_schema is not None:
+        body["generationConfig"] = {
+            "responseMimeType": "application/json",
+            "responseSchema": response_schema,
+        }
     headers = {"x-goog-api-key": api_key}
     return url, headers, body
 
@@ -53,6 +70,34 @@ def extraer_texto(datos):
         raise RuntimeError(
             "Gemini respondió, pero no encontré el texto esperado."
         ) from error
+
+
+def parsear_respuesta_json(texto, response_schema):
+    if not isinstance(texto, str):
+        raise ValueError("La respuesta del modelo no es texto.")
+    texto_limpio = texto.strip()
+    texto_limpio = re.sub(r"^```(?:json)?\s*", "", texto_limpio)
+    texto_limpio = re.sub(r"\s*```$", "", texto_limpio)
+    try:
+        datos = json.loads(texto_limpio)
+    except json.JSONDecodeError as error:
+        raise ValueError("La respuesta del modelo no es JSON válido.") from error
+    if not isinstance(datos, dict):
+        raise ValueError("La respuesta JSON debe ser un objeto.")
+    for clave in response_schema["required"]:
+        if clave not in datos:
+            raise ValueError(f"Falta la clave '{clave}' en la respuesta.")
+        tipo = response_schema["properties"][clave]["type"]
+        valor = datos[clave]
+        if tipo == "STRING" and not isinstance(valor, str):
+            raise ValueError(f"La clave '{clave}' debe ser texto.")
+        if tipo == "NUMBER" and (
+            not isinstance(valor, (int, float)) or isinstance(valor, bool)
+        ):
+            raise ValueError(f"La clave '{clave}' debe ser un número.")
+        if tipo == "BOOLEAN" and not isinstance(valor, bool):
+            raise ValueError(f"La clave '{clave}' debe ser true o false.")
+    return datos
 
 def calcular_costo(datos, precio_entrada, precio_salida):
     uso = datos["usageMetadata"]
