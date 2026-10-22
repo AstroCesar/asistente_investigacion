@@ -34,3 +34,9 @@ python -m prompts.test_consistencia
 ```
 
 Ese último comando hace doce peticiones reales a Gemini y actualiza el registro de resultados.
+
+## Ensayo de instalación limpia
+
+El 22 de octubre de 2026 cloné este repositorio desde GitHub en otra carpeta (`prueba-gate1`). Creé un entorno virtual nuevo, instalé lo indicado en `requirements.txt` y configuré la clave en un `.env` local. El script recibió una respuesta de Gemini y terminó sin errores. También comprobé que Git solo registra `.env.example`, no la clave real.
+
+Antes del ensayo faltaba este README. Lo agregué para que otra persona tenga los pasos sin depender de cómo tengo configurado mi computador.
