@@ -2,7 +2,7 @@
 
 import sys
 
-from src.consumir_gemini import obtener_dato_de_prueba
+from cliente import consultar_modelo
 
 
 PREGUNTA_EJEMPLO = (
@@ -14,7 +14,7 @@ PREGUNTA_EJEMPLO = (
 def main():
     pregunta = " ".join(sys.argv[1:]).strip() or PREGUNTA_EJEMPLO
     try:
-        print(obtener_dato_de_prueba(pregunta))
+        print(consultar_modelo(pregunta))
     except (ValueError, RuntimeError) as error:
         print(f"No pude obtener la respuesta: {error}")
         return 1

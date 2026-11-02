@@ -48,7 +48,7 @@ def main():
                         )
                 exitos += 1
                 print(f"  intento {numero}: válido {datos}")
-            except (ValueError, RuntimeError) as error:
+            except (ValueError, RuntimeError, TimeoutError) as error:
                 print(f"  intento {numero}: falló ({error})")
 
             if numero < intentos:

@@ -36,17 +36,19 @@ Sin argumentos, `main.py` usa una pregunta de ejemplo. También puedes escribir 
 python main.py "¿Qué es un exoplaneta?"
 ```
 
-Deberías ver una respuesta de Gemini en la terminal. Si aparece un mensaje de error, revisa la clave, el acceso a internet y el nombre del modelo en `.env`.
+Deberías ver los tokens, un costo estimado y la respuesta de Gemini en la terminal. Si aparece un mensaje de error, revisa la clave, el acceso a internet y el nombre del modelo en `.env`.
 
 `.env` y `.venv` son locales y están excluidos de Git. No subas tu clave al repositorio.
 
 ## Cómo está organizado
 
-`main.py` es el archivo que se ejecuta para hacer una pregunta. Llama a `src/consumir_gemini.py`, donde están las funciones que preparan la petición, la envían a Gemini y extraen el texto. Ese módulo también maneja los errores de la consulta; no hace falta ejecutarlo por separado.
+`main.py` es el archivo que se ejecuta para hacer una pregunta. Llama a `cliente.py`, que organiza la consulta completa. Por dentro usa `src/consumir_gemini.py` para preparar la petición, enviarla a Gemini y extraer el texto. Si hay un problema temporal, `cliente_reintento.py` espera y vuelve a intentar; una clave inválida no se reintenta.
 
-En el mismo módulo está `calcular_costo()`. La probé por separado con cantidades de tokens de ejemplo, pero todavía no está conectada a `main.py`: al hacer una pregunta, el programa muestra la respuesta y no calcula su costo.
+Para ver los reintentos sin llamar a Gemini, puedes ejecutar `python cliente_reintento.py`. Esa prueba simulada falla dos veces y responde en el tercer intento.
 
-También probé otros modelos antes de elegir Gemini. La comparación de precios por tokens, tiempos y calidad de las respuestas, junto con el motivo de la elección, está en [la decisión de arquitectura](docs/decision-arquitectura.md). Esa comparación es distinta de la prueba de `calcular_costo()`.
+En el mismo módulo está `calcular_costo()`. Ahora `cliente.py` la usa después de cada respuesta exitosa: muestra el costo estimado de esa consulta y el acumulado de la sesión. La estimación usa la tarifa de pago publicada para Gemini 3.5 Flash-Lite, [consultada el 25 de octubre de 2026](https://ai.google.dev/gemini-api/docs/pricing); no significa que se haya cobrado ese importe en el nivel gratuito. El acumulado vuelve a cero cada vez que cierras el programa.
+
+También probé otros modelos antes de elegir Gemini. La comparación de precios por tokens, tiempos y calidad de las respuestas, junto con el motivo de la elección, está en [la decisión de arquitectura](docs/decision-arquitectura.md). Esa comparación es distinta del costo estimado que ahora aparece en cada consulta.
 
 ## Banco de prompts
 
@@ -57,6 +59,16 @@ python -m prompts.test_consistencia
 ```
 
 Ese último comando hace doce peticiones reales a Gemini y actualiza el registro de resultados.
+
+## Pruebas del cliente
+
+Para revisar los errores, reintentos y costos sin llamar a Gemini:
+
+```powershell
+python -m pytest test_cliente.py -v
+```
+
+Estas pruebas simulan las respuestas de la API y las esperas; no gastan tokens.
 
 ## Ensayo de instalación limpia
 
