@@ -1,0 +1,82 @@
+[
+  {
+    "consulta": "¿Qué es el paralaje estelar? Responde en una frase.",
+    "f1": 0.32,
+    "correccion_factual": "sí",
+    "completitud": "sí",
+    "contradiccion": "no",
+    "nota": "Explica el desplazamiento aparente y su uso para medir distancias. El F1 baja porque la respuesta agrega detalles que la referencia breve no incluye."
+  },
+  {
+    "consulta": "¿Qué es una supernova? Responde en una frase.",
+    "f1": 0.36,
+    "correccion_factual": "parcial",
+    "completitud": "sí",
+    "contradiccion": "no",
+    "nota": "La respuesta dice 'luminosa' y la referencia dice 'brillante'. El F1 no las reconoce como palabras parecidas. Además, suena a que todas las supernovas vienen de estrellas masivas. También existen las de tipo Ia, relacionadas con enanas blancas."
+  },
+  {
+    "consulta": "¿Qué es un agujero negro? Responde en una frase.",
+    "f1": 0.40,
+    "correccion_factual": "sí",
+    "completitud": "sí",
+    "contradiccion": "no",
+    "nota": "La idea coincide con la referencia: ni la luz puede escapar. El puntaje baja por palabras adicionales, no por una contradicción."
+  },
+  {
+    "consulta": "¿Qué es la rotación de la Tierra? Responde en una frase.",
+    "f1": 0.48,
+    "correccion_factual": "parcial",
+    "completitud": "sí",
+    "contradiccion": "no",
+    "nota": "El giro sobre el eje está bien. 'Una vuelta cada 24 horas' sirve como aproximación al día solar, pero la vuelta respecto de las estrellas dura unos 23 h 56 min."
+  },
+  {
+    "consulta": "¿Qué es un planeta? Responde en una frase.",
+    "f1": 0.49,
+    "correccion_factual": "parcial",
+    "completitud": "sí",
+    "contradiccion": "no",
+    "nota": "Contesta la idea básica, pero presenta el criterio de 'limpiar la órbita' como definición general. La definición formal de la UAI con ese criterio se refiere a planetas del Sistema Solar."
+  },
+  {
+    "consulta": "¿Qué es una galaxia? Responde en una frase.",
+    "f1": 0.63,
+    "correccion_factual": "parcial",
+    "completitud": "sí",
+    "contradiccion": "no",
+    "nota": "Estrellas, gas, polvo y gravedad coinciden con la referencia. Decir que toda galaxia tiene miles de millones de estrellas es demasiado amplio: hay galaxias enanas más pequeñas."
+  },
+  {
+    "consulta": "¿Qué es un año luz? Responde en una frase.",
+    "f1": 0.72,
+    "correccion_factual": "sí",
+    "completitud": "sí",
+    "contradiccion": "no",
+    "nota": "Lo define como distancia y añade una cifra aproximada correcta: 9,46 billones de kilómetros. Esas palabras extra bajan la precisión de la métrica."
+  },
+  {
+    "consulta": "¿Qué es la Luna? Responde en una frase.",
+    "f1": 0.95,
+    "correccion_factual": "sí",
+    "completitud": "sí",
+    "contradiccion": "no",
+    "nota": "Coincide con la referencia. Solo agrega 'único', sin cambiar la idea."
+  },
+  {
+    "consulta": "¿Cuál es el planeta más grande del Sistema Solar? Responde en una frase.",
+    "f1": 1.0,
+    "correccion_factual": "sí",
+    "completitud": "sí",
+    "contradiccion": "no",
+    "nota": "Responde Júpiter. Las mismas palabras aparecen en otro orden, por eso el F1 es 1."
+  },
+  {
+    "consulta": "¿Cuál es el planeta más cercano al Sol? Responde en una frase.",
+    "f1": 1.0,
+    "correccion_factual": "sí",
+    "completitud": "sí",
+    "contradiccion": "no",
+    "nota": "Responde Mercurio. Cambia el orden de las palabras respecto de la referencia, pero conserva el dato."
+  }
+]

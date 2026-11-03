@@ -1,0 +1,162 @@
+[
+  {
+    "consulta": "¿Qué es un exoplaneta? Responde en una frase.",
+    "referencia": "Un exoplaneta es un planeta que orbita una estrella fuera del Sistema Solar.",
+    "respuesta": "Un exoplaneta es cualquier planeta que orbita alrededor de una estrella que no sea nuestro Sol.",
+    "precision": 0.5,
+    "cobertura": 0.6153846153846154,
+    "f1": 0.5517241379310345
+  },
+  {
+    "consulta": "¿Qué es el paralaje estelar? Responde en una frase.",
+    "referencia": "El paralaje estelar permite medir la distancia de estrellas cercanas.",
+    "respuesta": "El paralaje estelar es el aparente cambio de posición de una estrella cercana respecto a fondo de estrellas más lejanas, causado por el movimiento de la Tierra alrededor del Sol, y se utiliza para medir la distancia a los astros.",
+    "precision": 0.2,
+    "cobertura": 0.8,
+    "f1": 0.32000000000000006
+  },
+  {
+    "consulta": "¿Qué es una supernova? Responde en una frase.",
+    "referencia": "Una supernova es una explosión estelar muy brillante.",
+    "respuesta": "Una supernova es la violenta y luminosa explosión con la que una estrella masiva muere al final de su vida.",
+    "precision": 0.25,
+    "cobertura": 0.625,
+    "f1": 0.35714285714285715
+  },
+  {
+    "consulta": "¿Qué es una estrella? Responde en una frase.",
+    "referencia": "Una estrella es una esfera de gas que emite luz y calor propios.",
+    "respuesta": "Una estrella es una esfera gigante de gas caliente y luminoso que produce su propia energía mediante reacciones nucleares en su interior.",
+    "precision": 0.4090909090909091,
+    "cobertura": 0.6923076923076923,
+    "f1": 0.5142857142857142
+  },
+  {
+    "consulta": "¿Qué es un planeta? Responde en una frase.",
+    "referencia": "Un planeta es un cuerpo celeste que orbita una estrella.",
+    "respuesta": "Un planeta es un cuerpo celeste que orbita alrededor de una estrella, tiene suficiente masa para mantener el equilibrio hidroestático (forma casi esférica) y ha limpiado la vecindad de su órbita.",
+    "precision": 0.3225806451612903,
+    "cobertura": 1.0,
+    "f1": 0.4878048780487805
+  },
+  {
+    "consulta": "¿Cuál es el planeta más grande del Sistema Solar? Responde en una frase.",
+    "referencia": "Júpiter es el planeta más grande del Sistema Solar.",
+    "respuesta": "El planeta más grande del Sistema Solar es Júpiter.",
+    "precision": 1.0,
+    "cobertura": 1.0,
+    "f1": 1.0
+  },
+  {
+    "consulta": "¿Cuál es el planeta más cercano al Sol? Responde en una frase.",
+    "referencia": "Mercurio es el planeta más cercano al Sol.",
+    "respuesta": "El planeta más cercano al Sol es Mercurio.",
+    "precision": 1.0,
+    "cobertura": 1.0,
+    "f1": 1.0
+  },
+  {
+    "consulta": "¿Qué es la Luna? Responde en una frase.",
+    "referencia": "La Luna es el satélite natural de la Tierra.",
+    "respuesta": "La Luna es el único satélite natural de la Tierra.",
+    "precision": 0.9,
+    "cobertura": 1.0,
+    "f1": 0.9473684210526316
+  },
+  {
+    "consulta": "¿Qué es una galaxia? Responde en una frase.",
+    "referencia": "Una galaxia es un conjunto de estrellas, gas y polvo unidos por la gravedad.",
+    "respuesta": "Una galaxia es un enorme sistema compuesto por miles de millones de estrellas, gas, polvo y materia oscura, unidos entre sí por la fuerza de la gravedad.",
+    "precision": 0.48148148148148145,
+    "cobertura": 0.9285714285714286,
+    "f1": 0.6341463414634146
+  },
+  {
+    "consulta": "¿Qué es la Vía Láctea? Responde en una frase.",
+    "referencia": "La Vía Láctea es la galaxia que contiene el Sistema Solar.",
+    "respuesta": "La Vía Láctea es una galaxia espiral que contiene nuestro sistema solar, junto con miles de millones de estrellas, gas y polvo, unidas por la gravedad.",
+    "precision": 0.38461538461538464,
+    "cobertura": 0.9090909090909091,
+    "f1": 0.5405405405405405
+  },
+  {
+    "consulta": "¿Qué es un cometa? Responde en una frase.",
+    "referencia": "Un cometa es un cuerpo de hielo y polvo que orbita el Sol.",
+    "respuesta": "Un cometa es un cuerpo celeste pequeño compuesto de hielo, polvo y rocas que orbita alrededor del Sol, desarrollando una atmósfera luminosa y una cola brillante cuando se acerca a él.",
+    "precision": 0.3870967741935484,
+    "cobertura": 0.9230769230769231,
+    "f1": 0.5454545454545454
+  },
+  {
+    "consulta": "¿Qué es un asteroide? Responde en una frase.",
+    "referencia": "Un asteroide es un cuerpo rocoso pequeño que orbita el Sol.",
+    "respuesta": "Un asteroide es un cuerpo rocoso y metálico, más pequeño que un planeta, que orbita alrededor del Sol, principalmente en la región situada entre Marte y Júpiter.",
+    "precision": 0.37037037037037035,
+    "cobertura": 0.9090909090909091,
+    "f1": 0.5263157894736842
+  },
+  {
+    "consulta": "¿Qué es un eclipse solar? Responde en una frase.",
+    "referencia": "Un eclipse solar ocurre cuando la Luna se interpone entre el Sol y la Tierra.",
+    "respuesta": "Un eclipse solar es un fenómeno astronómico en el que la Luna se interpone entre la Tierra y el Sol, ocultando total o parcialmente su luz desde nuestra perspectiva.",
+    "precision": 0.4482758620689655,
+    "cobertura": 0.8666666666666667,
+    "f1": 0.5909090909090909
+  },
+  {
+    "consulta": "¿Qué es un eclipse lunar? Responde en una frase.",
+    "referencia": "Un eclipse lunar ocurre cuando la Tierra proyecta su sombra sobre la Luna.",
+    "respuesta": "Un eclipse lunar es un fenómeno astronómico que ocurre cuando la Tierra se interpone entre el Sol y la Luna, proyectando su sombra sobre esta última y oscureciéndola total o parcialmente.",
+    "precision": 0.3870967741935484,
+    "cobertura": 0.9230769230769231,
+    "f1": 0.5454545454545454
+  },
+  {
+    "consulta": "¿Qué es una nebulosa? Responde en una frase.",
+    "referencia": "Una nebulosa es una nube de gas y polvo en el espacio.",
+    "respuesta": "Una nebulosa es una gigantesca nube de gas y polvo interestelar en el espacio, compuesta principalmente de hidrógeno y helio, que a menudo sirve como cuna para la formación de nuevas estrellas.",
+    "precision": 0.375,
+    "cobertura": 1.0,
+    "f1": 0.5454545454545454
+  },
+  {
+    "consulta": "¿Qué es un agujero negro? Responde en una frase.",
+    "referencia": "Un agujero negro es una región cuya gravedad impide escapar incluso a la luz.",
+    "respuesta": "Un agujero negro es una región del espacio con una concentración de masa tan densa y un campo gravitatorio tan fuerte que nada, ni siquiera la luz, puede escapar de él.",
+    "precision": 0.2903225806451613,
+    "cobertura": 0.6428571428571429,
+    "f1": 0.4
+  },
+  {
+    "consulta": "¿Qué es una enana blanca? Responde en una frase.",
+    "referencia": "Una enana blanca es el remanente compacto de una estrella que agotó su combustible.",
+    "respuesta": "Una enana blanca es el remanente denso y caliente que queda tras la muerte de una estrella de masa baja o media, como nuestro Sol, cuando agota su combustible nuclear.",
+    "precision": 0.4,
+    "cobertura": 0.8571428571428571,
+    "f1": 0.5454545454545455
+  },
+  {
+    "consulta": "¿Qué es un año luz? Responde en una frase.",
+    "referencia": "Un año luz es la distancia que recorre la luz en un año.",
+    "respuesta": "Un año luz es la distancia que recorre la luz en el vacío durante un año, equivalente a aproximadamente 9,46 billones de kilómetros.",
+    "precision": 0.5652173913043478,
+    "cobertura": 1.0,
+    "f1": 0.7222222222222222
+  },
+  {
+    "consulta": "¿Qué es la rotación de la Tierra? Responde en una frase.",
+    "referencia": "La rotación es el giro de la Tierra sobre su propio eje.",
+    "respuesta": "La rotación de la Tierra es el movimiento en el que el planeta gira sobre su propio eje imaginario, completando una vuelta cada 24 horas y dando origen al día y a la noche.",
+    "precision": 0.3235294117647059,
+    "cobertura": 0.9166666666666666,
+    "f1": 0.4782608695652174
+  },
+  {
+    "consulta": "¿Qué es la traslación de la Tierra? Responde en una frase.",
+    "referencia": "La traslación es el movimiento de la Tierra alrededor del Sol.",
+    "respuesta": "La traslación de la Tierra es el movimiento que hace este planeta al girar alrededor del Sol, el cual dura aproximadamente 365 días y da origen a las estaciones del año.",
+    "precision": 0.3548387096774194,
+    "cobertura": 1.0,
+    "f1": 0.5238095238095238
+  }
+]
