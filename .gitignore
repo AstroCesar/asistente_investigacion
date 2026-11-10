@@ -19,4 +19,6 @@ Thumbs.db
 
 # Logs
 *.log
+# Notas locales del ensayo del agente
+notas_agente.json
 Documentacion/
