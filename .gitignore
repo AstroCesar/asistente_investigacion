@@ -21,4 +21,8 @@ Thumbs.db
 *.log
 # Notas locales del ensayo del agente
 notas_agente.json
+# Base local de la prueba de Chroma del Bloque 24
+chroma_prueba_db/
+# Índice generado a partir del corpus del Bloque 24
+vectorstore/
 Documentacion/
