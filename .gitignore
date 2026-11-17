@@ -25,4 +25,8 @@ notas_agente.json
 chroma_prueba_db/
 # Índice generado a partir del corpus del Bloque 24
 vectorstore/
+# Índice de los tres textos usados para probar la receta del Bloque 25
+vectorstore_receta/
+# Índice de la réplica guiada del Bloque 25
+vectorstore_ejemplo/
 Documentacion/
