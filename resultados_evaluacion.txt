@@ -1,0 +1,15 @@
+Fecha: 2026-11-18
+Configuración: k=3, chunk_size=200, chunk_overlap=30
+
+0.33  1.00  ¿Qué hace el cliente si Gemini no responde?
+0.33  1.00  ¿Cómo cambia la espera entre reintentos?
+0.33  1.00  ¿Qué pasa si Gemini rechaza la clave de API?
+0.33  1.00  ¿Se vuelve a intentar una petición rechazada por la clave?
+0.33  1.00  ¿Cómo estima el cliente el costo de una respuesta?
+0.33  1.00  ¿El cliente suma el costo a la sesión?
+0.33  1.00  ¿Qué términos de astronomía conoce el glosario?
+0.33  1.00  ¿Cómo calcula el agente el tiempo de observación?
+0.33  1.00  ¿Qué hace el glosario si no encuentra un término?
+0.00  n/a  ¿Por qué brilla el Sol?
+
+promedio -> precisión: 0.300  recall: 1.000
