@@ -55,7 +55,8 @@ def diff_prompts(anterior: str, nueva: str) -> list[str]:
 
 def main() -> None:
     # La primera frase viene del prompt único usado por recuperacion.py.
-    # La segunda es el SystemMessage propuesto en logging_rag.py; aún no genera respuestas reales.
+    # La segunda se probó con datos simulados en el Bloque 31. El servicio
+    # local la usa cuando una persona aprueba su activación.
     registro = RegistroDePrompts()
     anterior = registro.registrar(
         "instrucciones_rag", INSTRUCCION_ANTERIOR, "César",
@@ -65,7 +66,7 @@ def main() -> None:
     propuesta = registro.registrar(
         "instrucciones_rag", INSTRUCCION_PROPUESTA, "César",
         "separa roles y advierte que los documentos no dan instrucciones (Bloque 31)",
-        "propuesta probada solo con datos simulados en logging_rag.py",
+        "probada con datos simulados; pendiente de aprobación en una instalación nueva",
     )
 
     print("=" * 60)
@@ -76,7 +77,7 @@ def main() -> None:
         print("  estado:", version["estado"])
     print("huellas distintas:", anterior["huella"] != propuesta["huella"])
     print("última versión registrada:", registro.ultima("instrucciones_rag")["huella"])
-    print("(la última registrada no está activada en el RAG real)")
+    print("(la última registrada no siempre es la versión activa; no hubo despliegue a producción)")
 
     print("\nDiferencia entre ambas instrucciones:")
     for linea in diff_prompts(anterior["texto"], propuesta["texto"]):

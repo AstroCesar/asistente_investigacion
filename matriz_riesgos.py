@@ -35,19 +35,19 @@ MIS_RIESGOS = [
         # El agente puede pedir este borrado; hay aprobación, pero una equivocación perdería la nota.
         "riesgo": "Borrar por error una nota de observación local",
         "probabilidad": 2, "impacto": 5,
-        "mitigacion": "Aprobación en consola antes de eliminar_nota_observacion (Bloque 23)",
+        "mitigacion": "El grafo se pausa y la persona aprueba o rechaza en consola antes de eliminar_nota_observacion",
     },
     {
         # El corpus actual es fijo, por eso la probabilidad es menor que en uno abierto a usuarios.
         "riesgo": "Instrucciones falsas dentro de un documento recuperado",
         "probabilidad": 2, "impacto": 4,
-        "mitigacion": "Filtro, roles y contexto delimitado probados en logging_rag.py (Bloque 31); aún no conectados al recuperador real",
+        "mitigacion": "servicio_rag.py filtra documentos, separa roles y delimita el contexto; test_gate2.py prueba el rechazo",
     },
     {
-        # Hoy las preguntas son de prueba; registro_rag.py y las trazas viejas guardan texto completo.
-        "riesgo": "Guardar una pregunta con datos personales en trazas antiguas",
+        # La traza vieja ya fue convertida; vigilar futuras escrituras sigue siendo necesario.
+        "riesgo": "Guardar una pregunta con datos personales en un registro",
         "probabilidad": 2, "impacto": 4,
-        "mitigacion": "El logger nuevo guarda longitud y conteos (Bloque 31); falta cambiar los registros antiguos que aún guardan la pregunta",
+        "mitigacion": "logging_rag.py guarda metadatos; registro_seguro.py convirtió los archivos anteriores y agente_con_herramientas.py y registro_rag.py ya omiten texto libre; test_gate2.py lo comprueba",
     },
     {
         # Ya probamos una pregunta fuera del corpus; el prompt puede fallar en otras.
@@ -66,8 +66,8 @@ MIS_RIESGOS = [
 # La única fila alta de este prototipo ya tiene un control humano en el código.
 PUNTOS_SUPERVISION = {
     "Borrar por error una nota de observación local": (
-        "esperar_aprobacion en agente_con_herramientas.py pide s/n antes de borrar "
-        "y rechaza si no hay respuesta (Bloque 23)"
+        "resolver_borrado_con_persona en grafo_supervision.py usa interrupt/Command; "
+        "esperar_aprobacion en agente_con_herramientas.py pide s/n y rechaza si no hay respuesta"
     ),
 }
 

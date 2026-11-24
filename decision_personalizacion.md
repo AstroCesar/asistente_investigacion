@@ -1,7 +1,7 @@
 # Decisión de personalización
 
 ## 1. El problema
-Estamos probando un clasificador separado del agente para distinguir entre consultas al glosario, cálculos de tiempo de observación y búsquedas en el corpus, con una respuesta JSON que tenga `intencion` y `accion_sugerida` coherentes. En 20 mensajes nuevos probados con el mismo prompt, 2 respuestas tuvieron el JSON incompleto y 1 de las 18 respuestas con formato válido eligió la categoría equivocada.
+Estamos probando un clasificador separado del agente para distinguir entre consultas al glosario, cálculos de tiempo de observación y búsquedas en el corpus, con una respuesta JSON que tenga `intencion` y `accion_sugerida` coherentes. En 20 mensajes nuevos probados con el mismo prompt, 2 respuestas no fueron JSON válido y 1 de las 18 respuestas con formato válido eligió la categoría equivocada.
 
 ## 2. Resultado del método de decisión
 - RAG: 0 puntos

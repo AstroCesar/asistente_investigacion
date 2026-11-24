@@ -1,8 +1,62 @@
 # Asistente de investigación
 
-Estoy empezando este asistente para trabajar con temas de investigación astronómica. En esta etapa hace una consulta a Gemini y prueba cuatro prompts cortos que devuelven JSON. Todavía no lee artículos ni PDF; eso vendrá más adelante.
+Mi idea es construir un asistente que me ayude con la investigación astronómica. Todavía estamos armando la base. En el primer módulo hice consultas directas a Gemini; en este ya puedo guardar textos, buscar los que tienen relación con una pregunta y responder mostrando de qué archivo salió la información.
 
-## Ponerlo en marcha (Windows, PowerShell)
+Por ahora el corpus es chico: cinco fragmentos que explican partes del programa y cinco fichas inventadas para practicar cómo se organizaría una observación. Las fichas están en `corpus_practica.py` y no representan observaciones reales. El asistente todavía no lee artículos ni PDF ni consulta un catálogo de estrellas. Me sirve para probar el recorrido completo antes de incorporar fuentes de investigación.
+
+## Gate 2: indexar y consultar el RAG
+
+Estas instrucciones son para Windows PowerShell. Probé las dependencias de `requirements.txt` con Python 3.14.7. Para instalar estas versiones, usa Python 3.12 o superior.
+
+```powershell
+git clone https://github.com/AstroCesar/asistente_investigacion.git
+cd asistente_investigacion
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+Copy-Item .env.example .env
+notepad .env
+```
+
+Edita `.env` y reemplaza `tu_llave_aqui` por tu clave en `API_KEY`. `MODEL_NAME` trae el modelo usado en el proyecto. La clave no se imprime ni se sube a Git.
+
+`verificar_entorno.py` detecta si dejaste la clave de ejemplo y cuenta los fragmentos guardados. Si aparece que falta el índice antes de indexar, está bien: todavía no lo creaste. El verificador no llama a Gemini; una clave inválida se detecta cuando el programa necesita llamar a la API para indexar o consultar.
+
+En un clon nuevo, crea el índice una vez y luego abre el servicio:
+
+```powershell
+python indexar_corpus.py
+python verificar_entorno.py
+python servicio_rag.py "¿Qué hace el cliente si Gemini no responde?"
+```
+
+La primera orden usa Gemini para convertir los textos en vectores y guarda diez fragmentos en `vectorstore/`. Esa carpeta queda en tu equipo y Git no la sube. Si ya tenías los cinco textos anteriores, el indexador conserva esos registros y agrega las cinco fichas nuevas. Si vuelves a correrlo sin cambiar nada, no calcula otra vez los vectores guardados. Si editas un texto sin cambiar su lugar, o agregas uno al final, procesa los cambios. Si quitas un texto del corpus, el índice no lo borra por su cuenta. El servicio abre el índice que ya existe; en cada pregunta genera el vector de la consulta y le pide la respuesta a Gemini.
+
+La respuesta debe traer una cita como `[1]` y una línea `Fuentes: [1] cliente_reintento.py`. El servicio aparta los fragmentos sospechosos o que no tienen fuente. Si no queda información confiable, o la respuesta viene sin una cita válida, lo dice en vez de inventar. En la consola aparecen eventos con un mismo `trace_id` para seguir cada consulta. Guardan cantidades, tiempos y tokens, pero no copian el texto de la pregunta ni de los documentos. El costo es una estimación con la tarifa que anoté el 25 de octubre de 2026, no una factura ni un precio que se actualice solo.
+
+Para comprobar los cuatro criterios obligatorios sin gastar tokens:
+
+```powershell
+python -m pytest test_gate2.py -v
+```
+
+Las pruebas crean un índice temporal con embeddings simulados y borran solo una nota temporal del propio test. También puedes ejecutar `python ensayo_gate2.py` para ver el ensayo guiado, igualmente simulado. El borrado de una nota real es la acción de riesgo alto de este prototipo: el grafo se pausa con `interrupt()`, espera la decisión `s/n` en consola y se reanuda con `Command(resume=...)` antes de permitir el borrado. La matriz está en `matriz_riesgos.py` y las versiones de prompt en `registro_prompts.py`. No hicimos un despliegue a producción.
+
+Para decidir si el RAG local usa la nueva versión del prompt, corre `python grafo_supervision.py`: muestra los dos textos, se detiene y espera que escribas `s` o `n`. Con `s`, guarda la huella aprobada en `prompt_activo.json` y la próxima consulta de `servicio_rag.py` usa ese texto. Con `n`, mantiene el texto que ya estuviera activo. El archivo de estado queda en tu equipo y está excluido de Git; en una instalación nueva se usa la versión anterior hasta que alguien apruebe la propuesta. Para probar las dos ramas sin cambiar tu estado local, usa `python grafo_supervision.py --ensayo`. Esto cambia el prompt del prototipo local, no despliega nada a producción.
+
+Si quieres ver la supervisión y la consulta real en una sola corrida, usa `python servicio_rag.py --mostrar-supervision`. Primero se detiene y te pide `s` o `n`. Después hace la pregunta con el prompt que haya quedado activo y muestra su huella en `consulta_recibida`. Esta opción sí llama a Gemini. La consulta normal no pide aprobación porque no está cambiando el prompt. Si la versión propuesta ya estaba activa, responder `n` solo la deja como estaba: no vuelve a la versión anterior.
+
+La evaluación de recuperación usa quince preguntas de este corpus. Se corre con `python evaluacion_recuperacion.py` y deja el resultado en `resultados_evaluacion.txt`. Mi decisión sobre personalización está en `decision_personalizacion.md`; el cálculo se puede repetir con `python decision.py`. Las mediciones reales de tiempo y tokens del Bloque 28 están en `registros_latencia_costo.jsonl`. `trazas_agente.jsonl` guarda los pasos del agente y las decisiones de aprobación sin guardar texto libre. El servicio muestra su propia traza en la consola. Conviene revisar juntos esos eventos y la respuesta al hacer la corrida final.
+
+La corrida real y mi revisión de la rúbrica están en `docs/entrega_gate2.md`. Ahí distingo las mediciones reales de las pruebas simuladas y explico qué conserva cada registro.
+
+También probé la instalación en carpetas nuevas, sin copiar `.env` ni el índice. Instalé las dependencias, corrí las pruebas e hice consultas reales a Gemini desde esas copias con una clave configurada en cada una. Después agregué `--mostrar-supervision`, probé `s` y `n`, y corrí la consulta real con esa opción. Dejé los resultados en `docs/entrega_gate2.md`.
+
+## Lo que quiero hacer después
+
+Este Gate 2 prueba que las piezas funcionan juntas con un corpus de práctica. Más adelante quiero usar la misma base para un asistente que me ayude a investigar: cargar fuentes astronómicas que pueda revisar, buscar información sobre estrellas u otros objetos y ver de dónde sale cada respuesta. Ahí tendré que decidir qué datos reales usar y cómo mantenerlos al día. La indexación, la búsqueda, las citas y los controles ya están en partes separadas, así que puedo cambiar el corpus y mejorar cada parte sin rehacer todo el programa. Eso todavía es trabajo pendiente, no una función que esté lista hoy.
+
+## Primer módulo: consulta directa a Gemini (Windows, PowerShell)
 
 Necesitas Python y Git instalados, y una clave de la API de Gemini.
 

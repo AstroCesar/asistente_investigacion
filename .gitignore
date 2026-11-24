@@ -21,6 +21,8 @@ Thumbs.db
 *.log
 # Notas locales del ensayo del agente
 notas_agente.json
+# Versión aprobada del prompt en este equipo
+prompt_activo.json
 # Base local de la prueba de Chroma del Bloque 24
 chroma_prueba_db/
 # Índice generado a partir del corpus del Bloque 24

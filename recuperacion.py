@@ -16,12 +16,16 @@ Pregunta: {pregunta}
 Respuesta:"""
 
 
-def formatear_contexto(chunks_recuperados):
+def formatear_contexto(chunks_recuperados, incluir_fuente=False):
     lineas = []
     citas = {}
     for numero, doc in enumerate(chunks_recuperados, 1):
-        lineas.append(f"[{numero}] {doc.page_content}")
-        citas[numero] = doc.metadata.get("fuente", "desconocida")
+        fuente = doc.metadata.get("fuente", "desconocida")
+        if incluir_fuente:
+            lineas.append(f"[{numero}] (fuente: {fuente}) {doc.page_content}")
+        else:
+            lineas.append(f"[{numero}] {doc.page_content}")
+        citas[numero] = fuente
     return "\n\n".join(lineas), citas
 
 

@@ -17,6 +17,8 @@ from langchain_core.tools import tool
 from langchain_google_genai import ChatGoogleGenerativeAI
 from pydantic import BaseModel, Field
 
+from registro_seguro import TEXTO_OMITIDO, argumentos_sin_valores, id_opaco
+
 
 @tool
 def consultar_glosario(termino: str) -> str:
@@ -100,15 +102,18 @@ def guardar_nota_observacion(titulo: str, contenido: str) -> str:
 @tool
 def eliminar_nota_observacion(nota_id: str) -> str:
     """Elimina definitivamente una nota local por ID. Pide aprobación humana antes de borrar."""
+    from grafo_supervision import resolver_borrado_con_persona
+
     notas = leer_notas()
     nota = next((item for item in notas if item["id"] == nota_id), None)
     if nota is None:
         return f"No encontré una nota con ID {nota_id}. No se borró nada."
 
-    aprobado = esperar_aprobacion(
+    mensaje = (
         f"El agente quiere borrar definitivamente la nota '{nota['titulo']}' (ID {nota_id}). "
         "¿Aprobar? (s/n y Enter): "
     )
+    aprobado = resolver_borrado_con_persona(nota_id, mensaje, esperar_aprobacion)
     registro_aprobaciones.append({
         "herramienta": "eliminar_nota_observacion",
         "argumentos": {"nota_id": nota_id},
@@ -117,6 +122,10 @@ def eliminar_nota_observacion(nota_id: str) -> str:
     })
     if not aprobado:
         return f"Borrado no aprobado para la nota {nota_id}. La nota sigue guardada."
+    notas = leer_notas()
+    nota = next((item for item in notas if item["id"] == nota_id), None)
+    if nota is None:
+        return f"La nota {nota_id} ya no existe. No se borró nada."
     notas.remove(nota)
     ARCHIVO_NOTAS.write_text(json.dumps(notas, ensure_ascii=False, indent=2), encoding="utf-8")
     return f"Borrado aprobado. Se eliminó la nota {nota_id}."
@@ -142,20 +151,31 @@ def dejar_respuesta_como_texto(resultado: dict) -> dict:
 
 
 def registrar_traza(session_id: str, entrada: str, resultado: dict) -> None:
-    """Guarda la pregunta, los pasos del agente y la respuesta en una línea JSON."""
+    """Guarda los pasos del agente sin copiar preguntas ni respuestas completas."""
+    acciones = []
+    for accion, observacion in resultado.get("intermediate_steps", []):
+        paso = {
+            "herramienta": accion.tool,
+            "argumentos": argumentos_sin_valores(accion.tool_input),
+            "observacion": TEXTO_OMITIDO,
+            "observacion_len": len(str(observacion)),
+        }
+        if accion.tool == "eliminar_nota_observacion":
+            nota_id = accion.tool_input.get("nota_id") if isinstance(accion.tool_input, dict) else None
+            aprobacion = next((
+                item["aprobado"] for item in reversed(registro_aprobaciones)
+                if item["argumentos"].get("nota_id") == nota_id
+            ), None)
+            paso["aprobado"] = aprobacion
+        acciones.append(paso)
     registro = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
-        "session_id": session_id,
-        "entrada": entrada,
-        "acciones": [
-            {
-                "herramienta": accion.tool,
-                "argumentos": accion.tool_input,
-                "observacion": observacion,
-            }
-            for accion, observacion in resultado.get("intermediate_steps", [])
-        ],
-        "respuesta_final": resultado["output"],
+        "session_id": id_opaco(session_id, "sesion"),
+        "entrada": TEXTO_OMITIDO,
+        "entrada_len": len(entrada),
+        "acciones": acciones,
+        "respuesta_final": TEXTO_OMITIDO,
+        "respuesta_len": len(str(resultado["output"])),
     }
     with ARCHIVO_TRAZAS.open("a", encoding="utf-8") as archivo:
         archivo.write(json.dumps(registro, ensure_ascii=False) + "\n")
@@ -185,7 +205,7 @@ def main():
     ejecutor = AgentExecutor(
         agent=agente,
         tools=herramientas,
-        verbose=True,
+        verbose=False,
         return_intermediate_steps=True,
     )
     agente_con_memoria = RunnableWithMessageHistory(
@@ -224,7 +244,10 @@ def main():
         borrado = agente_con_memoria.invoke({"entrada": pregunta_borrar}, config_riesgos)
         registrar_traza("ensayo_riesgos", pregunta_borrar, borrado)
         print("Respuesta al borrar:", borrado["output"])
-        print("Aprobaciones registradas:", registro_aprobaciones)
+        print("Aprobaciones registradas:", [
+            {"herramienta": item["herramienta"], "aprobado": item["aprobado"]}
+            for item in registro_aprobaciones
+        ])
         return
 
     config = {"configurable": {"session_id": "observacion_1"}}

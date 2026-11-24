@@ -18,6 +18,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 
 from indexar_corpus import DIRECTORIO_INDICE, NOMBRE_COLECCION, crear_embeddings
 from recuperacion import PROMPT_TEMPLATE, formatear_contexto
+from registro_seguro import sanitizar_costo
 
 
 ARCHIVO_REGISTROS = Path(__file__).with_name("registros_latencia_costo.jsonl")
@@ -70,17 +71,18 @@ def registrar_consulta(pregunta, persist_directory=DIRECTORIO_INDICE, k=3):
     with medir(tiempos, "generacion"):
         respuesta = chat_model.invoke(prompt)
 
-    return {
+    return sanitizar_costo({
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "pregunta": pregunta,
         "k": k,
         "tiempos_ms": {etapa: round(segundos * 1000, 2) for etapa, segundos in tiempos.items()},
         "tiempo_total_ms": round(sum(tiempos.values()) * 1000, 2),
         "tokens": dict(respuesta.usage_metadata) if respuesta.usage_metadata else None,
-    }
+    })
 
 
 def guardar_registro(registro):
+    registro = sanitizar_costo(registro)
     with ARCHIVO_REGISTROS.open("a", encoding="utf-8") as archivo:
         archivo.write(json.dumps(registro, ensure_ascii=False) + "\n")
 
@@ -88,8 +90,8 @@ def guardar_registro(registro):
 def main():
     if sys.argv[1:] == ["--vista-previa"]:
         print("Primero, tres preguntas distintas con k=3:")
-        for pregunta in PREGUNTAS:
-            print("-", pregunta)
+        for numero, pregunta in enumerate(PREGUNTAS, 1):
+            print(f"consulta {numero}: {len(pregunta)} caracteres")
         print("Después, la primera pregunta con k=3 y k=6.")
         print("Entre las dos pruebas se agregan cinco consultas reales al archivo.")
         return

@@ -17,15 +17,15 @@ No pido aprobación para leer el glosario, calcular o guardar una nota de prueba
 
 ## Revisión de trazas
 
-Las consultas de prueba se guardan en [trazas_agente.jsonl](../trazas_agente.jsonl). Cada línea tiene la pregunta, la sesión, la herramienta elegida, sus argumentos, lo que devolvió y la respuesta final. Para las notas revisaré además si el borrado fue aprobado o rechazado.
+Las consultas de prueba se guardan en [trazas_agente.jsonl](../trazas_agente.jsonl). Para Gate 2 dejé las trazas sin texto libre: cada línea conserva la fecha, un identificador de sesión, la herramienta, los nombres de sus argumentos, las longitudes y, si hubo un intento de borrado, si fue aprobado. Las preguntas, los valores de los argumentos, las observaciones y las respuestas no quedan escritos en ese archivo. Guardé una copia local de las trazas anteriores antes de convertirlas.
 
-Por ahora revisaré las trazas después de cada cambio en el agente. Si más adelante hay muchas consultas, revisaré una muestra pequeña una vez por semana. Me fijaré sobre todo en llamadas repetidas a la misma herramienta con argumentos parecidos y en respuestas que afirmen algo que la herramienta no entregó.
+Por ahora revisaré las trazas después de cada cambio en el agente. Si más adelante hay muchas consultas, revisaré una muestra pequeña una vez por semana. Me fijaré sobre todo en herramientas repetidas y en decisiones de borrado. Para revisar el contenido de una respuesta tendré que reproducir la consulta en local, porque la traza ya no guarda ese texto.
 
-Ya vimos por qué esto importa: en una prueba, el agente mandó `transito` sin tilde. El glosario no lo encontró y Gemini dio una definición por su cuenta. Ajusté la búsqueda para aceptar las dos formas. Al revisar la traza, quiero poder distinguir una respuesta respaldada por el glosario de una respuesta que el modelo completó solo.
+Ya vimos por qué esto importa: en una prueba, el agente mandó `transito` sin tilde. El glosario no lo encontró y Gemini dio una definición por su cuenta. Ajusté la búsqueda para aceptar las dos formas. Si vuelve a pasar, compararé la salida del glosario y la respuesta durante una prueba local, sin copiar esos textos al registro.
 
 ## Qué hacer ante un comportamiento inesperado
 
 1. Si una herramienta empieza a responder mal, la saco temporalmente de la lista `herramientas`.
-2. Reviso la línea de la traza para ver la pregunta, los argumentos que recibió y lo que respondió. Comparo eso con la respuesta final.
+2. Reviso la traza para identificar la sesión, la herramienta y si hubo aprobación. Después reproduzco la consulta en una prueba local para comparar argumentos, observación y respuesta.
 3. Si eligió la herramienta equivocada, ajusto su descripción. Si la cuenta o la definición está mal, corrijo esa función. Si la respuesta agregó algo sin respaldo, reviso el prompt.
 4. Repito la misma pregunta en una sesión nueva y miro la traza antes de volver a usar la herramienta.

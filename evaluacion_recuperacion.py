@@ -18,6 +18,11 @@ CASOS_EVALUACION = [
     {"pregunta": "¿Qué términos de astronomía conoce el glosario?", "ids_relevantes": {"doc3"}},
     {"pregunta": "¿Cómo calcula el agente el tiempo de observación?", "ids_relevantes": {"doc4"}},
     {"pregunta": "¿Qué hace el glosario si no encuentra un término?", "ids_relevantes": {"doc3"}},
+    {"pregunta": "¿Qué datos incluye la ficha de una observación de práctica?", "ids_relevantes": {"doc5"}},
+    {"pregunta": "¿Qué se registra si el cielo está nublado durante la práctica?", "ids_relevantes": {"doc6"}},
+    {"pregunta": "¿Cómo se planifican las tomas para ensayar un tránsito?", "ids_relevantes": {"doc7"}},
+    {"pregunta": "¿Qué datos se anotan sobre una toma de prueba?", "ids_relevantes": {"doc8"}},
+    {"pregunta": "¿Qué tiempo observado queda si se cancela la sesión?", "ids_relevantes": {"doc9"}},
     {"pregunta": "¿Por qué brilla el Sol?", "ids_relevantes": set()},
 ]
 

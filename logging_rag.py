@@ -76,7 +76,6 @@ def filtrar_documentos_sospechosos(documentos: list[Document]):
             descartados.append((documento, patrones))
             logger.warning("documento descartado por inyección", extra={"extra_data": {
                 "evento": "documento_descartado_por_inyeccion",
-                "fuente": documento.metadata.get("fuente", "desconocida"),
                 "n_patrones": len(patrones),
             }})
         else:

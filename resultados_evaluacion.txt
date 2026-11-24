@@ -1,4 +1,4 @@
-Fecha: 2026-11-18
+Fecha: 2026-11-24
 Configuración: k=3, chunk_size=200, chunk_overlap=30
 
 0.33  1.00  ¿Qué hace el cliente si Gemini no responde?
@@ -10,6 +10,11 @@ Configuración: k=3, chunk_size=200, chunk_overlap=30
 0.33  1.00  ¿Qué términos de astronomía conoce el glosario?
 0.33  1.00  ¿Cómo calcula el agente el tiempo de observación?
 0.33  1.00  ¿Qué hace el glosario si no encuentra un término?
+0.33  1.00  ¿Qué datos incluye la ficha de una observación de práctica?
+0.33  1.00  ¿Qué se registra si el cielo está nublado durante la práctica?
+0.33  1.00  ¿Cómo se planifican las tomas para ensayar un tránsito?
+0.33  1.00  ¿Qué datos se anotan sobre una toma de prueba?
+0.33  1.00  ¿Qué tiempo observado queda si se cancela la sesión?
 0.00  n/a  ¿Por qué brilla el Sol?
 
-promedio -> precisión: 0.300  recall: 1.000
+promedio -> precisión: 0.311  recall: 1.000
