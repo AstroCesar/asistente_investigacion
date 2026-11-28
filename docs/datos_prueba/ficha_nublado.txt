@@ -1,0 +1,3 @@
+Nota simulada para probar el prototipo. No contiene mediciones científicas reales.
+
+La ficha de práctica registra fecha, lugar, objeto elegido y equipo previsto. Si el cielo está nublado, la sesión se marca como pospuesta. No se agregan tomas ni mediciones que no se hicieron. En ese caso, el tiempo observado queda en cero.
